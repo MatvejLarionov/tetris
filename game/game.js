@@ -2,10 +2,18 @@ import './game.scss'
 import { GameManadger } from "./GameManadger.js";
 import { FigureControllerConstrct } from "./GameManadger.js";
 import { Point } from "./Point.js";
-
 import {createElement} from '../components/createElement.js'
 import { getButton } from '../components/button.js';
+// let g=null;
 
+export const usersDataForGame={
+    record:0,
+    id:null,
+    setUsersData(obj){
+        this.record=obj.record
+        this.id=obj.id
+    }
+}
 const callBackStop=()=>{
     g.stopGame()
 }
@@ -50,8 +58,8 @@ export const getTetris=()=>{
     game.getElementsByTagName('div')[new Point(n - 1,0).getIndex(n)].style.borderTopRightRadius='15px'
     game.getElementsByTagName('div')[new Point(n - 1,m - 1).getIndex(n)].style.borderBottomRightRadius='15px'
     game.getElementsByTagName('div')[new Point(0,m-1).getIndex(n)].style.borderBottomLeftRadius='15px'
-
-    const g=new GameManadger(FigureControllerConstrct(game.getElementsByTagName('div'),n,m))
+    console.log(usersDataForGame)
+    const g=new GameManadger(FigureControllerConstrct(game.getElementsByTagName('div'),n,m),usersDataForGame)
     g.startGame()
 
     let id=null

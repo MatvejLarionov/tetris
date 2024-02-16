@@ -23,11 +23,14 @@ function listenerKeys(event){
 
 
 export class GameManadger{
-    constructor(figContr,maxCount){
+    constructor(figContr,{record,id}){
         this.figContr=figContr
         this.isContinue=true
         this.count=0
-        this.maxCount=maxCount
+        this.userData={
+            record:record,
+            id:id
+        }
         listenerKeys=listenerKeys.bind(this)
     }
     setNewFigure(){
@@ -69,6 +72,9 @@ export class GameManadger{
             }
         }).length
         count.innerText=this.count
+        if(this.count>this.record){
+            maxCount.innerText=this.record
+        }
     }
     isGameOver(){
         // console.log(this.figContr.realyColor)
