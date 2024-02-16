@@ -16,7 +16,7 @@ export const getTab=()=>{
             res = getRegistration()
             break;
         case '/game':
-            res=getTetris()
+            res = getTetris()
             break;
         default:
             break;

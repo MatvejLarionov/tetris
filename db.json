@@ -15,6 +15,18 @@
       "name": "Чубурек",
       "password": "Чубурек",
       "id": "7f65"
+    },
+    {
+      "id": "0e99",
+      "login": "asdf",
+      "password": "asdf",
+      "record": 0
+    },
+    {
+      "id": "a36e",
+      "login": "admin",
+      "password": "root",
+      "record": 0
     }
   ]
 }
