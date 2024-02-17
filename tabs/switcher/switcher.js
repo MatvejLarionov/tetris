@@ -1,4 +1,4 @@
-import { getTetris } from "../../game/game";
+import { getTetris, startGame } from "../../game/game";
 import { getRegistration } from "../registration/registration";
 import { getSignIn } from "../signIn/getSignIn";
 import { getTitle } from "../title/getTitle";
@@ -17,6 +17,7 @@ export const getTab=()=>{
             break;
         case '/game':
             res = getTetris()
+            startGame()
             break;
         default:
             break;

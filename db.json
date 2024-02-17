@@ -20,12 +20,18 @@
       "id": "0e99",
       "login": "asdf",
       "password": "asdf",
-      "record": 0
+      "record": 20
     },
     {
       "id": "a36e",
       "login": "admin",
       "password": "root",
+      "record": 0
+    },
+    {
+      "id": "8e3e",
+      "login": "JDL",
+      "password": "453231",
       "record": 0
     }
   ]

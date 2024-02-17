@@ -2,6 +2,7 @@ import { Point } from "./Point";
 import { Figure , Figure_I,Figure_J,Figure_L,Figure_O,Figure_S,Figure_T,Figure_Z } from "./Figure";
 import { Field } from "./Field";
 import { FigureController } from "./FigureController";
+import { patchUser } from "../api/patchUser";
 
 
 
@@ -31,6 +32,7 @@ export class GameManadger{
             record:record,
             id:id
         }
+        setTimeout(()=>{document.getElementById('record').innerText=this.userData.record})
         listenerKeys=listenerKeys.bind(this)
     }
     setNewFigure(){
@@ -71,9 +73,12 @@ export class GameManadger{
                 // field[i-1].style.background='white'
             }
         }).length
-        count.innerText=this.count
-        if(this.count>this.record){
-            maxCount.innerText=this.record
+        document.getElementById('count').innerText=this.count
+        if(this.count>this.userData.record){
+            this.userData.record=this.count
+            document.getElementById('record').innerText=this.count
+            patchUser(this.userData)
+            sessionStorage.setItem('usersDataForGame',JSON.stringify(this.userData))
         }
     }
     isGameOver(){

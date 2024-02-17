@@ -3,7 +3,6 @@ import { getButton } from "../../components/button.js";
 import { createElement } from "../../components/createElement.js";
 import { getInput } from "../../components/input.js";
 import { getUsers } from '../../api/getUsers.js';
-import { usersDataForGame } from '../../game/game.js';
 const userData={
     login:'',
     password:'',
@@ -33,9 +32,9 @@ const getUserData=(event)=>{
     getUsers().then(res=>{
         const index=res.findIndex(item=>item.login===userData.login && item.password===userData.password)
         if(index!==-1){
-            window.location.pathname='/game'
-            usersDataForGame.setUsersData(res[index])
+            sessionStorage.setItem('usersDataForGame',JSON.stringify(res[index]))
             document.getElementById('signInContainer').reset()
+            window.location.pathname='/game'
         }
         else{
             document.getElementById('error').innerText='Неправильный логин или пароль'

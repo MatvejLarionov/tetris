@@ -4,29 +4,38 @@ import { FigureControllerConstrct } from "./GameManadger.js";
 import { Point } from "./Point.js";
 import {createElement} from '../components/createElement.js'
 import { getButton } from '../components/button.js';
-// let g=null;
 
-export const usersDataForGame={
-    record:0,
-    id:null,
-    setUsersData(obj){
-        this.record=obj.record
-        this.id=obj.id
-    }
-}
-const callBackStop=()=>{
+let g=null;
+
+export const stopGame=()=>{
     g.stopGame()
+}
+let id=null
+const restartGame=()=>{
+    g.deleteGame()
+        if(id){
+            clearTimeout(id)
+            id=null
+        }
+        if(!id){
+            id = setTimeout(()=>{
+                g.startGame()
+            },200)
+        }
+}
+export const startGame=()=>{
+    g.startGame()
 }
 export const getTetris=()=>{
     const gameContainer=createElement({tagName:'div',className:'gameContainer',id:'gameContainer'})
 
     const game=createElement({tagName:'div',className:'game',id:'game'})
     const count=createElement({tagName:'p',className:'count',id:'count'})
-    const maxCount=createElement({tagName:'p',className:'maxCount',id:'maxCount'})
+    const record=createElement({tagName:'p',className:'record',id:'record'})
 
     const nav=createElement({tagName:'nav',className:'nav',id:'nav'})
-    const btnStop=getButton({text:'стоп',className:'btnStop',id:'btnStop'})
-    const btnRestart=getButton({text:'Заново',className:'btnRestart',id:'btnRestart'})
+    const btnStop=getButton({text:'стоп',className:'btnStop',id:'btnStop',callBack:stopGame})
+    const btnRestart=getButton({text:'Заново',className:'btnRestart',id:'btnRestart',callBack:restartGame})
     nav.append(
         btnStop,
         btnRestart
@@ -35,7 +44,7 @@ export const getTetris=()=>{
     gameContainer.append(
         game,
         count,
-        maxCount,
+        record,
         nav
     )
 
@@ -58,34 +67,18 @@ export const getTetris=()=>{
     game.getElementsByTagName('div')[new Point(n - 1,0).getIndex(n)].style.borderTopRightRadius='15px'
     game.getElementsByTagName('div')[new Point(n - 1,m - 1).getIndex(n)].style.borderBottomRightRadius='15px'
     game.getElementsByTagName('div')[new Point(0,m-1).getIndex(n)].style.borderBottomLeftRadius='15px'
-    console.log(usersDataForGame)
-    const g=new GameManadger(FigureControllerConstrct(game.getElementsByTagName('div'),n,m),usersDataForGame)
-    g.startGame()
-
-    let id=null
-    btnStop.addEventListener('click',()=>{
-        g.stopGame()
-    })
-    btnRestart.addEventListener('click',()=>{
-        g.deleteGame()
-        if(id){
-            clearTimeout(id)
-            id=null
-        }
-        if(!id){
-            id = setTimeout(()=>{
-                g.startGame()
-            },200)
-        }
-    })
-
+    
+    
+    g=new GameManadger(FigureControllerConstrct(game.getElementsByTagName('div'),n,m),JSON.parse(sessionStorage.getItem('usersDataForGame')))
+    
     count.innerText=0
-    maxCount.innerText=0
+    record.innerText=0
+    
     return gameContainer
 }
 // export const TetrisInit=()=>{
     
-//     const gameContainer=createElement({tagName:'div',className:'gameContainer',id:'gameContainer'})
+    //     const gameContainer=createElement({tagName:'div',className:'gameContainer',id:'gameContainer'})
 //     const app=document.getElementById('app')
 //     app.append(gameContainer)
 
