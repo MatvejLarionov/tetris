@@ -3,7 +3,7 @@ export const sendRequest = async ({baseUrl,method,pathname,id,body})=>{
     const config={
         method:method||'GET'
     }
-    if(method==='POST'||method==='PUT'){
+    if(method==='POST'||method==='PUT'||method==='PATCH'){
         config.body=JSON.stringify(body)
     }
     // switch (method) {
