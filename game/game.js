@@ -69,7 +69,7 @@ export const getTetris=()=>{
     game.getElementsByTagName('div')[new Point(0,m-1).getIndex(n)].style.borderBottomLeftRadius='15px'
     
     
-    g=new GameManadger(FigureControllerConstrct(game.getElementsByTagName('div'),n,m),JSON.parse(sessionStorage.getItem('usersDataForGame')))
+    g=new GameManadger(FigureControllerConstrct(game.getElementsByTagName('div'),n,m),window.location.pathname.split('/').at(-1))
     
     count.innerText=0
     record.innerText=0

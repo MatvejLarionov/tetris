@@ -3,6 +3,7 @@ import { Figure , Figure_I,Figure_J,Figure_L,Figure_O,Figure_S,Figure_T,Figure_Z
 import { Field } from "./Field";
 import { FigureController } from "./FigureController";
 import { patchUser } from "../api/patchUser";
+import { getUserRecord } from "../api/getUserRecord";
 
 
 
@@ -24,15 +25,18 @@ function listenerKeys(event){
 
 
 export class GameManadger{
-    constructor(figContr,{record,id}){
+    constructor(figContr,id){
         this.figContr=figContr
         this.isContinue=true
         this.count=0
         this.userData={
-            record:record,
+            record:null,
             id:id
         }
-        setTimeout(()=>{document.getElementById('record').innerText=this.userData.record})
+        getUserRecord(id).then(record=>{
+            this.userData.record=record
+            document.getElementById('record').innerText=this.userData.record
+        })
         listenerKeys=listenerKeys.bind(this)
     }
     setNewFigure(){
@@ -78,7 +82,6 @@ export class GameManadger{
             this.userData.record=this.count
             document.getElementById('record').innerText=this.count
             patchUser(this.userData)
-            sessionStorage.setItem('usersDataForGame',JSON.stringify(this.userData))
         }
     }
     isGameOver(){

@@ -7,32 +7,22 @@
   ],
   "users": [
     {
-      "name": "dima",
-      "password": "dima",
-      "id": "a2fd"
+      "id": "5a9d",
+      "login": "JDL",
+      "password": "453231",
+      "record": 500
     },
     {
-      "name": "Чубурек",
-      "password": "Чубурек",
-      "id": "7f65"
+      "id": "5fa4",
+      "login": "ГУСЬ",
+      "password": "ГУСЬ",
+      "record": 100000
     },
     {
-      "id": "0e99",
+      "id": "be04",
       "login": "asdf",
       "password": "asdf",
       "record": 20
-    },
-    {
-      "id": "a36e",
-      "login": "admin",
-      "password": "root",
-      "record": 0
-    },
-    {
-      "id": "8e3e",
-      "login": "JDL",
-      "password": "453231",
-      "record": 0
     }
   ]
 }

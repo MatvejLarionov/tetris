@@ -32,9 +32,8 @@ const getUserData=(event)=>{
     getUsers().then(res=>{
         const index=res.findIndex(item=>item.login===userData.login && item.password===userData.password)
         if(index!==-1){
-            sessionStorage.setItem('usersDataForGame',JSON.stringify(res[index]))
             document.getElementById('signInContainer').reset()
-            window.location.pathname='/game'
+            window.location.pathname=`/game/${res[index].id}`
         }
         else{
             document.getElementById('error').innerText='Неправильный логин или пароль'
