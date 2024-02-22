@@ -36,6 +36,7 @@ const postUserData=(event)=>{
             postUser(userData).then(res=>{
                 document.getElementById('regContainer').reset()
                 document.getElementById('error').innerText=''
+                window.location.pathname=`/game/${res.id}`
                 userData.toEmpty()
             })
         }else{
