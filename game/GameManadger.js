@@ -8,21 +8,34 @@ import { getUserRecord } from "../api/getUserRecord";
 
 
 function listenerKeys(event){
-    if(event.code==='KeyA'&&this.figContr.canSetFigureOnField(new Point(this.figContr.realyColor[0].x-1,this.figContr.realyColor[0].y))){
-        this.figContr.movFigure(new Point(this.figContr.realyColor[0].x-1,this.figContr.realyColor[0].y))
+    if(event.code==='KeyA'){
+        this.tryMovLeft()
     }
-    if(event.code==='KeyD'&&this.figContr.canSetFigureOnField(new Point(this.figContr.realyColor[0].x+1,this.figContr.realyColor[0].y))){
-        this.figContr.movFigure(new Point(this.figContr.realyColor[0].x+1,this.figContr.realyColor[0].y))
+    if(event.code==='KeyD'){
+        this.tryMovRight()
     }
-    if(event.code==='KeyW' && this.figContr.canTurn_clockwise()){
-        this.figContr.turn_clockwise(this.figContr.realyColor)
+    if(event.code==='KeyW'){
+        this.tryTurnClockwise()
     }
-    if(event.code==='KeyS' && this.figContr.canTurn_counterclockwise()){
-        
-        this.figContr.turn_counterclockwise(this.figContr.realyColor)
+    if(event.code==='KeyS'){
+        this.tryTurnCounterclockwise()
     }
 }
 
+function listenerButtons(event){
+    if(event.target.id==='btnLeft'){
+        this.tryMovLeft()
+    }
+    if(event.target.id==='btnRight'){
+        this.tryMovRight()
+    }
+    if(event.target.id==='btnTurnClockwise'){
+        this.tryTurnClockwise()
+    }
+    if(event.target.id==='btnTurnCounterclockwise'){
+        this.tryTurnCounterclockwise()
+    }
+}
 
 export class GameManadger{
     constructor(figContr,id){
@@ -38,6 +51,7 @@ export class GameManadger{
             document.getElementById('record').innerText=this.userData.record
         })
         listenerKeys=listenerKeys.bind(this)
+        listenerButtons=listenerButtons.bind(this)
     }
     setNewFigure(){
         const listColor=['red', 'blue', 'orange', 'rgb(158, 158, 72)'/*yellow*/,'green','purple']
@@ -56,6 +70,27 @@ export class GameManadger{
     }
     canMovDown(){
         return this.figContr.canSetFigureOnField(new Point(this.figContr.realyColor[0].x,this.figContr.realyColor[0].y +1))
+    }
+
+    tryMovRight(){
+        if(this.figContr.canSetFigureOnField(new Point(this.figContr.realyColor[0].x+1,this.figContr.realyColor[0].y))){
+            this.figContr.movFigure(new Point(this.figContr.realyColor[0].x+1,this.figContr.realyColor[0].y))
+        }
+    }
+    tryMovLeft(){
+        if(this.figContr.canSetFigureOnField(new Point(this.figContr.realyColor[0].x-1,this.figContr.realyColor[0].y))){
+            this.figContr.movFigure(new Point(this.figContr.realyColor[0].x-1,this.figContr.realyColor[0].y))
+        }
+    }
+    tryTurnClockwise(){
+        if(this.figContr.canTurn_clockwise()){
+            this.figContr.turn_clockwise(this.figContr.realyColor)
+        }
+    }
+    tryTurnCounterclockwise(){
+        if(this.figContr.canTurn_counterclockwise()){
+            this.figContr.turn_counterclockwise(this.figContr.realyColor)
+        }
     }
     findFilledRows(){
         const res=[]
@@ -115,6 +150,7 @@ export class GameManadger{
         this.isContinue=true
         this.movingDown()
         document.addEventListener('keydown',listenerKeys)
+        document.addEventListener('click',listenerButtons)
         // document.addEventListener('keydown',event=>{
         //     if(event.code==='KeyA'&&this.figContr.canSetFigureOnField(new Point(this.figContr.realyColor[0].x-1,this.figContr.realyColor[0].y))){
         //         this.figContr.movFigure(new Point(this.figContr.realyColor[0].x-1,this.figContr.realyColor[0].y))
@@ -134,6 +170,7 @@ export class GameManadger{
     stopGame(){
         this.isContinue=false
         document.removeEventListener('keydown',listenerKeys)
+        document.removeEventListener('click',listenerButtons)
     }
     deleteGame(){
         this.stopGame()

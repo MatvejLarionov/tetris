@@ -2,6 +2,12 @@
     font-family: Lemon;
     src: url('../public/fonts/Lemon/Lemon-Regular.ttf');
 }
+:root{
+    --n:0;
+    --m:0;
+    --cellSize:30px;
+
+}
 .gameContainer{
     display: flex;
     flex-wrap: wrap;
@@ -14,9 +20,12 @@
     border-radius: 25px;
     border: 10px double brown;
 
+    width: calc(var(--n)*var(--cellSize));
     height: 100%;
 
     display: grid;
+    grid-template-columns: repeat(var(--n),var(--cellSize));
+    grid-auto-rows: var(--cellSize);
 }
 .cell{
     width: 100%;
@@ -74,4 +83,39 @@
     background-color: red;
     border: 5px solid purple;
     border-radius: 25px;
+}
+
+.navControl{
+    width: 1440px;
+    display: flex;
+    justify-content: space-around;
+}
+.navControl button{
+    transition: 0.5s;
+    width: 100px;
+    height: 100px;
+    border-radius: 25px;
+    font-family: lemon;
+    font-size: 17px;
+    font-weight: 600;
+}
+.navControl button:active{
+    filter: invert(100%);
+    transition: 0.01s;
+}
+.btnRight{
+    background-image: url('../public/images/btnRight.jpg');
+    background-size: 100px;
+}
+.btnLeft{
+    background-image: url('../public/images/btnLeft.jpg');
+    background-size: 100px;
+}
+.btnTurnClockwise{
+    background-image: url('../public/images/btnTurnClockwise.jpg');
+    background-size: 100px;
+}
+.btnTurnCounterclockwise{
+    background-image: url('../public/images/btnTurnCounterclockwise.jpg');
+    background-size: 100px;
 }

@@ -41,19 +41,31 @@ export const getTetris=()=>{
         btnRestart
     )
 
+    const navControl=createElement({tagName:'nav',className:'navControl',id:'navControl'});
+    const btnRight=getButton({className:'btnRight',id:'btnRight'})
+    const btnLeft=getButton({className:'btnLeft',id:'btnLeft'})
+
+    const btnTurnClockwise=getButton({className:'btnTurnClockwise',id:'btnTurnClockwise'})
+    const btnTurnCounterclockwise=getButton({className:'btnTurnCounterclockwise',id:'btnTurnCounterclockwise'})
+    navControl.append(
+        btnLeft,
+        btnTurnCounterclockwise,
+        btnTurnClockwise,
+        btnRight,
+    )
+
     gameContainer.append(
         game,
         count,
         record,
-        nav
+        nav,
+        navControl
     )
-
+    document.querySelector(':root').style.setProperty('--n',15)
+    document.querySelector(':root').style.setProperty('--m',23)
     const n=15
     const m=23
     const CellSize='30px'
-    game.style.gridTemplateColumns=`repeat(${n},${CellSize})`
-    game.style.gridAutoRows=`${CellSize}`
-    game.style.width = `${CellSize.slice(0,CellSize.length-2)*n}px`
     const crtCell=(color)=>{
         const div=document.createElement('div')
         div.style.background=color
