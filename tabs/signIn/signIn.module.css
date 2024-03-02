@@ -40,6 +40,10 @@
     transition: 0.5s;
     transform: scale(1.2) rotate(15deg);
 }
+.btnSend:active{
+    transition: 0.1s;
+    filter: invert(100%);
+}
 .error{
     color: red;
     font-family: lemon;

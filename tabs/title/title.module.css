@@ -1,12 +1,23 @@
 .container{
-    /* max-width: 1000px; */
-    height: 100px;
-    margin: 0 auto;
+    transform: scale(2);
+
+    margin: 200px auto;
+
+    max-width: 580px;
+    min-height: 300px;
+
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    /* background: url('../../public/images/title.jpg');
-    object-fit: cover; */
+    justify-content: space-around;
+
+    background-image: url('../../public/images/title.png');
+    background-position: center center;
+    background-size: 50%;
+
+    border-radius: 25px;
+
+    font-weight: 900;
+    color: black;
 }
 .nav{
     display: flex;
@@ -14,11 +25,25 @@
     flex-wrap: wrap;
     width: 100%;
 }
-.btnSignIn{
-
+.nav button{
+    color: white;
+    transition: 0.5s;
+    width: 100px;
+    height: 50px;
+    border-radius: 25px;
+    font-size: 17px;
+    font-weight: 600;
+    background-image: url('../../public/images/btnSend.png');
+    background-position: center center;
+    background-size: 50% 50%;
 }
-.btnRegistration{
-    
+.nav button:hover{
+    transition: 0.5s;
+    transform: scale(1.2) rotate(15deg);
+}
+.nav button:active{
+    transition: 0.1s;
+    filter: invert(100%);
 }
 .titleText{
     text-align: center;
