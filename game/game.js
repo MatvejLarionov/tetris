@@ -26,13 +26,20 @@ const restartGame=()=>{
 export const startGame=()=>{
     g.startGame()
 }
-export const getTetris=()=>{
-    const gameContainer=createElement({tagName:'div',className:'gameContainer',id:'gameContainer'})
 
+
+const getGameField=()=>{
     const game=createElement({tagName:'div',className:'game',id:'game'})
-    const count=createElement({tagName:'p',className:'count',id:'count'})
-    const record=createElement({tagName:'p',className:'record',id:'record'})
-
+    return game
+}
+const getCounts=()=>{
+    const count=createElement({tagName:'p',className:'count',id:'count',text:'0'})
+    const record=createElement({tagName:'p',className:'record',id:'record',text:'0'})
+    const countContainer=createElement({tagName:'div',className:'countContainer',id:'countContainer'})
+    countContainer.append(count,record)
+    return countContainer
+}
+const getNav=()=>{
     const nav=createElement({tagName:'nav',className:'nav',id:'nav'})
     const btnStop=getButton({text:'стоп',className:'btnStop',id:'btnStop',callBack:stopGame})
     const btnRestart=getButton({text:'Заново',className:'btnRestart',id:'btnRestart',callBack:restartGame})
@@ -40,7 +47,10 @@ export const getTetris=()=>{
         btnStop,
         btnRestart
     )
+    return nav
+}
 
+const getNavControl=()=>{
     const navControl=createElement({tagName:'nav',className:'navControl',id:'navControl'});
     const btnRight=getButton({className:'btnRight',id:'btnRight'})
     const btnLeft=getButton({className:'btnLeft',id:'btnLeft'})
@@ -53,19 +63,29 @@ export const getTetris=()=>{
         btnTurnClockwise,
         btnRight,
     )
+    return navControl
+}
 
+export const getTetris=()=>{
+    const gameContainer=createElement({tagName:'div',className:'gameContainer',id:'gameContainer'})
+    
+    const game=getGameField()
+    const countContainer=getCounts()
+    const nav=getNav()
+    const navControl=getNavControl()
     gameContainer.append(
+        countContainer,
         game,
-        count,
-        record,
         nav,
         navControl
     )
-    document.querySelector(':root').style.setProperty('--n',15)
-    document.querySelector(':root').style.setProperty('--m',23)
+
+
     const n=15
     const m=23
     const CellSize='30px'
+    document.querySelector(':root').style.setProperty('--n',n)
+    document.querySelector(':root').style.setProperty('--m',m)
     const crtCell=(color)=>{
         const div=document.createElement('div')
         div.style.background=color
@@ -82,9 +102,6 @@ export const getTetris=()=>{
     
     
     g=new GameManadger(FigureControllerConstrct(game.getElementsByTagName('div'),n,m),window.location.pathname.split('/').at(-1))
-    
-    count.innerText=0
-    record.innerText=0
     
     return gameContainer
 }
