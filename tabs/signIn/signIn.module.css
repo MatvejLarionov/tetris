@@ -3,16 +3,18 @@
     src: url('../public/fonts/Lemon/Lemon-Regular.ttf');
 }
 .container{
-    margin: 0 auto;
+    transform: scale(2);
+    margin: 200px auto;
     max-width: 580px;
     min-height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background-image: url('../../public/images/title.jpg');
+    background-image: url('../../public/images/title.png');
     background-position: center center;
+    background-size: 50%;
     border-radius: 25px;
-    color: white;
+    color: black;
 }
 .signInContainer{
     width: 100%;
