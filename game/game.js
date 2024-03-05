@@ -5,173 +5,114 @@ import { Point } from "./Point.js";
 import {createElement} from '../components/createElement.js'
 import { getButton } from '../components/button.js';
 
-let g=null;
 
-export const stopGame=()=>{
-    g.stopGame()
-}
-let id=null
-const restartGame=()=>{
-    g.deleteGame()
-        if(id){
-            clearTimeout(id)
-            id=null
+function stopGame(){}
+function restartGame(){}
+export const Tetris={
+    gameContainer:createElement({tagName:'div',className:'gameContainer',id:'gameContainer'}),
+    game:null,
+    gameField:null,
+    n:15,
+    m:23,
+
+    stopGame(){
+        this.game.stopGame()
+    },
+    id:null,
+    restartGame(){
+        this.game.deleteGame()
+        if(this.id){
+            clearTimeout(this.id)
+            this.id=null
         }
-        if(!id){
-            id = setTimeout(()=>{
-                g.startGame()
+        if(!this.id){
+            this.id = setTimeout(()=>{
+                this.game.startGame()
             },200)
         }
-}
-export const startGame=()=>{
-    g.startGame()
-}
+    },
+    startGame(){
+        this.game.startGame()
+    },
 
+    createGameField(){
+        this.gameField=createElement({tagName:'div',className:'gameField',id:'gameField'})
 
-const getGameField=()=>{
-    const game=createElement({tagName:'div',className:'game',id:'game'})
-    return game
-}
-const getCounts=()=>{
-    const count=createElement({tagName:'p',className:'count',id:'count',text:'0'})
-    const record=createElement({tagName:'p',className:'record',id:'record',text:'0'})
-    const countContainer=createElement({tagName:'div',className:'countContainer',id:'countContainer'})
-    countContainer.append(count,record)
-    return countContainer
-}
-const getNav=()=>{
-    const nav=createElement({tagName:'nav',className:'nav',id:'nav'})
-    const btnStop=getButton({text:'стоп',className:'btnStop',id:'btnStop',callBack:stopGame})
-    const btnRestart=getButton({text:'Заново',className:'btnRestart',id:'btnRestart',callBack:restartGame})
-    nav.append(
-        btnStop,
-        btnRestart
-    )
-    return nav
-}
-
-const getNavControl=()=>{
-    const navControl=createElement({tagName:'nav',className:'navControl',id:'navControl'});
-    const btnRight=getButton({className:'btnRight',id:'btnRight'})
-    const btnLeft=getButton({className:'btnLeft',id:'btnLeft'})
-
-    const btnTurnClockwise=getButton({className:'btnTurnClockwise',id:'btnTurnClockwise'})
-    const btnTurnCounterclockwise=getButton({className:'btnTurnCounterclockwise',id:'btnTurnCounterclockwise'})
-    navControl.append(
-        btnLeft,
-        btnTurnCounterclockwise,
-        btnTurnClockwise,
-        btnRight,
-    )
-    return navControl
-}
-
-export const getTetris=()=>{
-    const gameContainer=createElement({tagName:'div',className:'gameContainer',id:'gameContainer'})
+        this.gameContainer.append(this.gameField)
+    },
+    setCounts(){
+        const count=createElement({tagName:'p',className:'count',id:'count',text:'0'})
+        const record=createElement({tagName:'p',className:'record',id:'record',text:'0'})
+        const countContainer=createElement({tagName:'div',className:'countContainer',id:'countContainer'})
+        countContainer.append(count,record)
+        
+        this.gameContainer.append(countContainer)
+    },
+    setNav(){
+        const nav=createElement({tagName:'nav',className:'nav',id:'nav'})
+        const btnStop=getButton({text:'стоп',className:'btnStop',id:'btnStop',callBack:stopGame})
+        const btnRestart=getButton({text:'Заново',className:'btnRestart',id:'btnRestart',callBack:restartGame})
+        nav.append(
+            btnStop,
+            btnRestart
+        )
+        
+        
+        this.gameContainer.append(nav)
+    },
+    setNavControl(){
+        const navControl=createElement({tagName:'nav',className:'navControl',id:'navControl'});
+        const btnRight=getButton({className:'btnRight',id:'btnRight'})
+        const btnLeft=getButton({className:'btnLeft',id:'btnLeft'})
     
-    const game=getGameField()
-    const countContainer=getCounts()
-    const nav=getNav()
-    const navControl=getNavControl()
-    gameContainer.append(
-        countContainer,
-        game,
-        nav,
-        navControl
-    )
+        const btnTurnClockwise=getButton({className:'btnTurnClockwise',id:'btnTurnClockwise'})
+        const btnTurnCounterclockwise=getButton({className:'btnTurnCounterclockwise',id:'btnTurnCounterclockwise'})
+        navControl.append(
+            btnLeft,
+            btnTurnCounterclockwise,
+            btnTurnClockwise,
+            btnRight,
+        )
+        
+        
+        this.gameContainer.append(navControl)
+    },
+    fillField(){
+        const crtCell=(color)=>{
+            const div=document.createElement('div')
+            div.style.background=color
+            div.className='cell'
+            this.gameField.append(div)
+        }
+        for (let i = 0; i < this.n*this.m; i++) {
+            crtCell('white')
+        }
+    },
+    roundCorners(){
+        this.gameField.getElementsByTagName('div')[0].style.borderTopLeftRadius='15px'
+        this.gameField.getElementsByTagName('div')[new Point(this.n - 1,0).getIndex(this.n)].style.borderTopRightRadius='15px'
+        this.gameField.getElementsByTagName('div')[new Point(this.n - 1,this.m - 1).getIndex(this.n)].style.borderBottomRightRadius='15px'
+        this.gameField.getElementsByTagName('div')[new Point(0,this.m-1).getIndex(this.n)].style.borderBottomLeftRadius='15px'
+    },
+    getTetris(){
+        this.setCounts()
+        this.createGameField()
+        this.setNav()
+        this.setNavControl()
+        
+        this.fillField()
+        this.roundCorners()
 
+        document.querySelector(':root').style.setProperty('--n',this.n)
+        document.querySelector(':root').style.setProperty('--m',this.m)
 
-    const n=15
-    const m=23
-    const CellSize='30px'
-    document.querySelector(':root').style.setProperty('--n',n)
-    document.querySelector(':root').style.setProperty('--m',m)
-    const crtCell=(color)=>{
-        const div=document.createElement('div')
-        div.style.background=color
-        div.className='cell'
-        game.append(div)
+        
+        this.game=new GameManadger(FigureControllerConstrct(this.gameField.getElementsByTagName('div'),this.n,this.m),window.location.pathname.split('/').at(-1))
+        
+        return this.gameContainer
     }
-    for (let i = 0; i < n*m; i++) {
-        crtCell('white')
-    }
-    game.getElementsByTagName('div')[0].style.borderTopLeftRadius='15px'
-    game.getElementsByTagName('div')[new Point(n - 1,0).getIndex(n)].style.borderTopRightRadius='15px'
-    game.getElementsByTagName('div')[new Point(n - 1,m - 1).getIndex(n)].style.borderBottomRightRadius='15px'
-    game.getElementsByTagName('div')[new Point(0,m-1).getIndex(n)].style.borderBottomLeftRadius='15px'
-    
-    
-    g=new GameManadger(FigureControllerConstrct(game.getElementsByTagName('div'),n,m),window.location.pathname.split('/').at(-1))
-    
-    return gameContainer
 }
-// export const TetrisInit=()=>{
-    
-    //     const gameContainer=createElement({tagName:'div',className:'gameContainer',id:'gameContainer'})
-//     const app=document.getElementById('app')
-//     app.append(gameContainer)
 
-//     gameContainer.innerHTML=`
-//     <div id="game" class="game">
-//       </div>
-//       <p id="count" class="count"></p>
-//       <nav class="nav">
-//           <button class="btnStop" id="btnStop">стоп</button>
-//           <button class="btnRestart" id="btnRestart">Заново</button>
-//       </nav>
-//     `
-//     const game=document.getElementById('game')
-//     const btnStop=document.getElementById('btnStop')
-//     const btnRestart=document.getElementById('btnRestart')
-//     const count=document.getElementById('count')
+stopGame=Tetris.stopGame.bind(Tetris)
 
-//     const n=15
-//     const m=23
-//     const CellSize='30px'
-//     game.style.gridTemplateColumns=`repeat(${n},${CellSize})`
-//     game.style.gridAutoRows=`${CellSize}`
-//     game.style.width = `${CellSize.slice(0,CellSize.length-2)*n}px`
-//     const crtCell=(color)=>{
-//         const div=document.createElement('div')
-//         div.style.background=color
-//         div.className='cell'
-//         game.append(div)
-//     }
-//     for (let i = 0; i < n*m; i++) {
-//         crtCell('white')
-//     }
-//     game.getElementsByTagName('div')[0].style.borderTopLeftRadius='15px'
-//     game.getElementsByTagName('div')[new Point(n - 1,0).getIndex(n)].style.borderTopRightRadius='15px'
-//     game.getElementsByTagName('div')[new Point(n - 1,m - 1).getIndex(n)].style.borderBottomRightRadius='15px'
-//     game.getElementsByTagName('div')[new Point(0,m-1).getIndex(n)].style.borderBottomLeftRadius='15px'
-
-//     // for (let i = 330; i < 345; i++) {
-//     //     const listColor=['red', 'blue', 'orange', 'rgb(158, 158, 72)'/*yellow*/,'green','purple']
-//     //     if(i===340){
-//     //         continue
-//     //     }
-//     //     game.getElementsByTagName('div')[i].style.background=listColor[Math.round(Math.random()*100)%listColor.length]
-//     // }
-
-
-//     const g=new GameManadger(FigureControllerConstrct(game.getElementsByTagName('div'),n,m))
-//     g.startGame()
-
-//     btnStop.addEventListener('click',()=>{
-//         g.stopGame()
-//     })
-//     let id=null
-//     btnRestart.addEventListener('click',()=>{
-//         g.deleteGame()
-//         if(id){
-//             clearTimeout(id)
-//             id=null
-//         }
-//         if(!id){
-//             id = setTimeout(()=>{
-//                 g.startGame()
-//             },200)
-//         }
-//     })
-//     count.innerText=0
-// }
+restartGame=Tetris.restartGame.bind(Tetris)

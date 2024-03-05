@@ -1,4 +1,4 @@
-import { getTetris, startGame } from "../../game/game";
+import { Tetris } from "../../game/game";
 import { getRegistration } from "../registration/registration";
 import { getSignIn } from "../signIn/getSignIn";
 import { getTitle } from "../title/getTitle";
@@ -14,8 +14,8 @@ export const getTab=()=>{
         return getRegistration()
         }
     if (window.location.pathname.includes('/game')){
-        const res = getTetris()
-        startGame()
+        const res=Tetris.getTetris()
+        Tetris.startGame()
         return res
     }
 }
