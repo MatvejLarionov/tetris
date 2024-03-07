@@ -35,10 +35,10 @@
 }
 .nav{
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-around;
-    width: 100px;
-    height: 150px;
+    width: 250px;
+    height: 60px;
 }
 .nav button{
     transition: 0.5s;
@@ -70,10 +70,11 @@
     min-width: 50px;
 
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: space-between;
 }
 .count{
+    margin: 2px 30px;
     min-width: 50px;
     height: 30px;
     text-align: center;
@@ -83,6 +84,8 @@
     border-radius: 25px;
 }
 .record{
+    margin: 2px 30px;
+
     min-width: 50px;
     height: 30px;
     text-align: center;
@@ -125,4 +128,16 @@
 .btnTurnCounterclockwise{
     background-image: url('../public/images/btnTurnCounterclockwise.jpg');
     background-size: 100px;
+}
+
+@media screen and (max-width: 900px) {
+    .gameContainer{
+        flex-direction: column;
+    }
+    .gameField{
+        order: -1;
+    }
+    .navControl{
+        width: 450px;
+    }
 }

@@ -3,7 +3,7 @@
     src: url('../public/fonts/Lemon/Lemon-Regular.ttf');
 }
 .container{
-    transform: scale(2);
+    /* transform: scale(2); */
     margin: 200px auto;
     max-width: 580px;
     min-height: 300px;

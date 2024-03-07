@@ -95,9 +95,9 @@ export const Tetris={
         this.gameField.getElementsByTagName('div')[new Point(0,this.m-1).getIndex(this.n)].style.borderBottomLeftRadius='15px'
     },
     getTetris(){
-        this.setCounts()
-        this.createGameField()
         this.setNav()
+        this.createGameField()
+        this.setCounts()
         this.setNavControl()
         
         this.fillField()
