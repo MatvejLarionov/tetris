@@ -98,7 +98,9 @@ export const Tetris={
         this.setNav()
         this.createGameField()
         this.setCounts()
-        this.setNavControl()
+        if(!navigator.userAgent.includes('Windows')){
+            this.setNavControl()
+        }
         
         this.fillField()
         this.roundCorners()
