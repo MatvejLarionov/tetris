@@ -41,6 +41,7 @@ export class GameManadger{
     constructor(figContr,id){
         this.figContr=figContr
         this.isContinue=true
+        this.isSetNewFigure=true
         this.count=0
         this.userData={
             record:null,
@@ -125,7 +126,12 @@ export class GameManadger{
     }
     movingDown(){
         const timeOfMovdown=150
-        this.setNewFigure()
+        if (this.isSetNewFigure) {
+            this.setNewFigure()
+        }
+        else{
+            this.isSetNewFigure=true
+        }
         const id=setInterval(() => {
             if(!this.isContinue){
                 clearInterval(id)
@@ -169,11 +175,13 @@ export class GameManadger{
     }
     stopGame(){
         this.isContinue=false
+        this.isSetNewFigure=false
         document.removeEventListener('keydown',listenerKeys)
         document.removeEventListener('click',listenerButtons)
     }
     deleteGame(){
         this.stopGame()
+        this.isSetNewFigure=true
         this.count=0
         count.innerText=this.count
         Object.values(this.figContr.field.field).forEach(item=>{

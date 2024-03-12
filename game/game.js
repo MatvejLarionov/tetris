@@ -15,11 +15,21 @@ export const Tetris={
     n:15,
     m:23,
 
-    stopGame(){
-        this.game.stopGame()
+    stopGame(event){
+        if(event.target.innerText.toLowerCase()==='stop'){
+            this.game.stopGame()
+            event.target.innerText='start'
+            this.gameField.style.filter='blur(50px)'
+        }else if(event.target.innerText.toLowerCase()==='start'){
+            this.game.startGame()
+            event.target.innerText='stop'
+            this.gameField.style.filter='blur(0)'
+        }
     },
     id:null,
     restartGame(){
+        document.getElementById('btnStartStop').innerText='stop'
+        this.gameField.style.filter='blur(0)'
         this.game.deleteGame()
         if(this.id){
             clearTimeout(this.id)
@@ -50,10 +60,10 @@ export const Tetris={
     },
     setNav(){
         const nav=createElement({tagName:'nav',className:'nav',id:'nav'})
-        const btnStop=getButton({text:'стоп',className:'btnStop',id:'btnStop',callBack:stopGame})
-        const btnRestart=getButton({text:'Заново',className:'btnRestart',id:'btnRestart',callBack:restartGame})
+        const btnStartStop=getButton({text:'stop',className:'btnStartStop',id:'btnStartStop',callBack:stopGame})
+        const btnRestart=getButton({text:'restart',className:'btnRestart',id:'btnRestart',callBack:restartGame})
         nav.append(
-            btnStop,
+            btnStartStop,
             btnRestart
         )
         
