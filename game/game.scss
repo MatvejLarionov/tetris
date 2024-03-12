@@ -11,7 +11,7 @@
 .gameContainer{
     margin: 0 auto;
     display: flex;
-    // flex-wrap: wrap;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 }
@@ -143,7 +143,7 @@
     }
     
 }
-@media screen and (max-height:895px) and (max-width: 719px) {
+@media screen and (max-height:760px) and (max-width: 719px) {
     .gameContainer{
         flex-direction: row;
         flex-wrap: wrap;
@@ -152,10 +152,10 @@
         margin: 0 auto;
     }
     .count{
-        margin: 2px 20px;
+        margin: 2px 15px 2px 0;
     }
     .record{
-        margin: 2px 20px;
+        margin:0;
     }
     .navControl{
         margin: 0 auto;
