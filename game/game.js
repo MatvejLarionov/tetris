@@ -30,16 +30,17 @@ export const Tetris={
     restartGame(){
         document.getElementById('btnStartStop').innerText='stop'
         this.gameField.style.filter='blur(0)'
-        this.game.deleteGame()
-        if(this.id){
-            clearTimeout(this.id)
-            this.id=null
-        }
-        if(!this.id){
-            this.id = setTimeout(()=>{
-                this.game.startGame()
-            },200)
-        }
+        this.game.restartGame()
+        // this.game.deleteGame()
+        // if(this.id){
+        //     clearTimeout(this.id)
+        //     this.id=null
+        // }
+        // if(!this.id){
+        //     this.id = setTimeout(()=>{
+        //         this.game.startGame()
+        //     },200)
+        // }
     },
     startGame(){
         this.game.startGame()

@@ -42,6 +42,7 @@ export class GameManadger{
         this.figContr=figContr
         this.isContinue=true
         this.isSetNewFigure=true
+        this.movingDownIsEndPromise=null
         this.count=0
         this.userData={
             record:null,
@@ -132,25 +133,28 @@ export class GameManadger{
         else{
             this.isSetNewFigure=true
         }
-        const id=setInterval(() => {
-            if(!this.isContinue){
-                clearInterval(id)
-                this.stopGame()
-                return
-            }
-            if(this.canMovDown()){
-                this.movDown()
-            }
-            else {
-                clearInterval(id)
-                this.deleteRows()
-                if(this.isGameOver()){
-                    this.stopGame()
+        this.movingDownIsEndPromise = new Promise((res,rej)=>{
+            const id=setInterval(() => {
+                if(!this.isContinue){
+                    clearInterval(id)
+                    res(true)
                     return
                 }
-                this.movingDown()
-            }
-        }, timeOfMovdown);
+                if(this.canMovDown()){
+                    this.movDown()
+                }
+                else {
+                    clearInterval(id)
+                    this.deleteRows()
+                    if(this.isGameOver()){
+                        this.stopGame()
+                        res(true)
+                        return
+                    }
+                    return this.movingDown()
+                }
+            }, timeOfMovdown);
+        })
     }
     startGame(){
         this.isContinue=true
@@ -186,6 +190,14 @@ export class GameManadger{
         count.innerText=this.count
         Object.values(this.figContr.field.field).forEach(item=>{
             item.style.background='white'
+        })
+    }
+    restartGame(){
+        this.deleteGame()
+        this.movingDownIsEndPromise.then(res=>{
+            if(res){
+                this.startGame()
+            }
         })
     }
 }
