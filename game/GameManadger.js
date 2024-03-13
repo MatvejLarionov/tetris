@@ -38,11 +38,12 @@ function listenerButtons(event){
 }
 
 export class GameManadger{
-    constructor(figContr,id){
+    constructor(figContr,id,timeOfMovdown){
         this.figContr=figContr
         this.isContinue=true
         this.isSetNewFigure=true
         this.movingDownIsEndPromise=null
+        this.timeOfMovdown=timeOfMovdown
         this.count=0
         this.userData={
             record:null,
@@ -126,7 +127,6 @@ export class GameManadger{
         return -1!==this.figContr.realyColor.findIndex(item=>item.y<0)
     }
     movingDown(){
-        const timeOfMovdown=150
         if (this.isSetNewFigure) {
             this.setNewFigure()
         }
@@ -153,7 +153,7 @@ export class GameManadger{
                     }
                     return this.movingDown()
                 }
-            }, timeOfMovdown);
+            }, this.timeOfMovdown);
         })
     }
     startGame(){

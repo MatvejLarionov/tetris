@@ -120,7 +120,7 @@ export const Tetris={
         document.querySelector(':root').style.setProperty('--m',this.m)
 
         
-        this.game=new GameManadger(FigureControllerConstrct(this.gameField.getElementsByTagName('div'),this.n,this.m),window.location.pathname.split('/').at(-1))
+        this.game=new GameManadger(FigureControllerConstrct(this.gameField.getElementsByTagName('div'),this.n,this.m),window.location.pathname.split('/').at(-1),150)
         
         return this.gameContainer
     }
