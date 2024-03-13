@@ -4,17 +4,30 @@ import { FigureControllerConstrct } from "./GameManadger.js";
 import { Point } from "./Point.js";
 import {createElement} from '../components/createElement.js'
 import { getButton } from '../components/button.js';
+import { getDialogOfDifficultyLevel } from './dialogOfDifficultyLevel.js';
 
 
 function stopGame(){}
 function restartGame(){}
+function openDialogOfDifficultyLevel() {
+    document.getElementById('dialogOfDifficultyLevel').showModal()
+}
+const difficultyLevels={
+    easy:500,
+    medium:250,
+    hard:150,
+}
 export const Tetris={
     gameContainer:createElement({tagName:'div',className:'gameContainer',id:'gameContainer'}),
     game:null,
     gameField:null,
+    timeOfMovdown:300,
     n:15,
     m:23,
 
+    setDifficultyLevel(difficultyLevel){
+        this.timeOfMovdown=difficultyLevels[difficultyLevel]
+    },
     stopGame(event){
         if(event.target.innerText.toLowerCase()==='stop'){
             this.game.stopGame()
@@ -30,6 +43,7 @@ export const Tetris={
     restartGame(){
         document.getElementById('btnStartStop').innerText='stop'
         this.gameField.style.filter='blur(0)'
+        this.game.timeOfMovdown=this.timeOfMovdown
         this.game.restartGame()
         // this.game.deleteGame()
         // if(this.id){
@@ -63,9 +77,11 @@ export const Tetris={
         const nav=createElement({tagName:'nav',className:'nav',id:'nav'})
         const btnStartStop=getButton({text:'stop',className:'btnStartStop',id:'btnStartStop',callBack:stopGame})
         const btnRestart=getButton({text:'restart',className:'btnRestart',id:'btnRestart',callBack:restartGame})
+        const btnDifficultyLevel=getButton({text:'difficulty level',className:'btnDifficultyLevel',id:'btnDifficultyLevel',callBack:openDialogOfDifficultyLevel})
         nav.append(
             btnStartStop,
-            btnRestart
+            btnRestart,
+            btnDifficultyLevel,
         )
         
         
@@ -105,6 +121,11 @@ export const Tetris={
         this.gameField.getElementsByTagName('div')[new Point(this.n - 1,this.m - 1).getIndex(this.n)].style.borderBottomRightRadius='15px'
         this.gameField.getElementsByTagName('div')[new Point(0,this.m-1).getIndex(this.n)].style.borderBottomLeftRadius='15px'
     },
+    setDialogOfDifficultyLevel(){
+        const dialog=createElement({tagName:'dialog',className:'dialogOfDifficultyLevel',id:'dialogOfDifficultyLevel'})
+        dialog.append(getDialogOfDifficultyLevel())
+        this.gameContainer.append(dialog)
+    },
     getTetris(){
         this.setNav()
         this.createGameField()
@@ -116,11 +137,12 @@ export const Tetris={
         this.fillField()
         this.roundCorners()
 
+        this.setDialogOfDifficultyLevel()
         document.querySelector(':root').style.setProperty('--n',this.n)
         document.querySelector(':root').style.setProperty('--m',this.m)
 
         
-        this.game=new GameManadger(FigureControllerConstrct(this.gameField.getElementsByTagName('div'),this.n,this.m),window.location.pathname.split('/').at(-1),150)
+        this.game=new GameManadger(FigureControllerConstrct(this.gameField.getElementsByTagName('div'),this.n,this.m),window.location.pathname.split('/').at(-1),this.timeOfMovdown)
         
         return this.gameContainer
     }
