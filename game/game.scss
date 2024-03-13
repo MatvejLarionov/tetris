@@ -149,7 +149,12 @@
     .navControl{
         width: 450px;
     }
-    
+    .nav .btnDifficultyLevel{
+        width: 10px;
+        height: 15px;
+        font-size: 0;
+        z-index: 1;
+    }
 }
 @media screen and (max-height:760px) and (max-width: 719px) {
     .gameContainer{
