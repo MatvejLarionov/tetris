@@ -1,0 +1,50 @@
+@font-face {
+    font-family: lemon;
+    src: url('../public/fonts/Lemon/Lemon-Regular.ttf');
+}
+.container{
+    /* transform: scale(2); */
+    margin: 200px auto;
+    max-width: 580px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-image: url('../../public/images/title.png');
+    background-position: center center;
+    background-size: 50%;
+    border-radius: 25px;
+    color: black;
+    border-radius: 25px;
+}
+.regContainer{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.btnSend{
+    transition: 0.5s;
+    width: 100px;
+    height: 50px;
+    border-radius: 25px;
+    font-size: 17px;
+    font-weight: 600;
+    background-image: url('../../public/images/btnSend.png');
+    background-position: center center;
+    background-size: 50% 50%;
+}
+.btnSend:hover{
+    transition: 0.5s;
+    transform: scale(1.2) rotate(15deg);
+}
+.btnSend:active{
+    transition: 0.1s;
+    filter: invert(100%);
+}
+.error{
+    color: red;
+    font-family: lemon;
+}

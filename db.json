@@ -1,0 +1,28 @@
+{
+  "texts": [
+    {
+      "id": "title",
+      "text": "Добро пожаловать в игру Тетрис! Выберите следующие действия:"
+    }
+  ],
+  "users": [
+    {
+      "id": "5a9d",
+      "login": "JDL",
+      "password": "453231",
+      "record": 500
+    },
+    {
+      "id": "5fa4",
+      "login": "ГУСЬ",
+      "password": "ГУСЬ",
+      "record": 100000
+    },
+    {
+      "id": "be04",
+      "login": "asdf",
+      "password": "asdf",
+      "record": 20
+    }
+  ]
+}
