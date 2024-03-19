@@ -1,0 +1,39 @@
+.dialogContainer{
+    width: 500px;
+    height: 500px;
+    border-radius: 25px;
+    background-color: black;
+
+    display: flex;
+    flex-direction: column;
+}
+.text{
+    align-self: center;
+    
+    font-size: 100px;
+    color:red;
+}
+.btnRestart{
+    transition: 0.5s;
+    width: 200px;
+    height: 100px;
+    border-radius: 50px;
+    border: none;
+    font-family: lemon;
+    font-size: 30px;
+    font-weight: 600;
+
+    background-color: blue;
+    color: white;
+
+    align-self: center;
+}
+.btnRestart:hover{
+    transform: scale(1.2);
+    transition: 0.5s;
+}
+.btnRestart:active{
+    background-color: black;
+    color: white;
+    transition: 0.3s;
+}

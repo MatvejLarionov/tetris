@@ -5,12 +5,16 @@ import { Point } from "./Point.js";
 import {createElement} from '../components/createElement.js'
 import { getButton } from '../components/button.js';
 import { getDialogOfDifficultyLevel } from './dialogOfDifficultyLevel.js';
+import { getDialogOfLoss } from './dialogOfLoss.js';
 
 
 function stopGame(){}
 function restartGame(){}
 function openDialogOfDifficultyLevel() {
     document.getElementById('dialogOfDifficultyLevel').showModal()
+}
+export function openDialogOfLoss(){
+    document.getElementById('dialogOfLoss').showModal()
 }
 const difficultyLevels={
     easy:500,
@@ -126,6 +130,11 @@ export const Tetris={
         dialog.append(getDialogOfDifficultyLevel())
         this.gameContainer.append(dialog)
     },
+    setDialogOfLoss(){
+        const dialogOfLoss=createElement({tagName:'dialog',className:'dialogOfLoss',id:'dialogOfLoss'})
+        dialogOfLoss.append(getDialogOfLoss())
+        this.gameContainer.append(dialogOfLoss)
+    },
     getTetris(){
         this.setNav()
         this.createGameField()
@@ -138,6 +147,8 @@ export const Tetris={
         this.roundCorners()
 
         this.setDialogOfDifficultyLevel()
+        this.setDialogOfLoss()
+
         document.querySelector(':root').style.setProperty('--n',this.n)
         document.querySelector(':root').style.setProperty('--m',this.m)
 

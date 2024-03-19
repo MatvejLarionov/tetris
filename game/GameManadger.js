@@ -4,6 +4,7 @@ import { Field } from "./Field";
 import { FigureController } from "./FigureController";
 import { patchUser } from "../api/patchUser";
 import { getUserRecord } from "../api/getUserRecord";
+import { openDialogOfLoss } from "./game";
 
 
 
@@ -148,6 +149,7 @@ export class GameManadger{
                     this.deleteRows()
                     if(this.isGameOver()){
                         this.stopGame()
+                        openDialogOfLoss()
                         res(true)
                         return
                     }
