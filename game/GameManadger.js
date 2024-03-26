@@ -2,9 +2,9 @@ import { Point } from "./Point";
 import { Figure , Figure_I,Figure_J,Figure_L,Figure_O,Figure_S,Figure_T,Figure_Z } from "./Figure";
 import { Field } from "./Field";
 import { FigureController } from "./FigureController";
-import { patchUser } from "../api/patchUser";
-import { getUserRecord } from "../api/getUserRecord";
+import { getUserDataForGame } from "../api/getUserDataForGame";
 import { openDialogOfLoss } from "./game";
+import { patchUserDataForGame } from "../api/patchUserDataForGame";
 
 
 
@@ -47,13 +47,29 @@ export class GameManadger{
         this.timeOfMovdown=timeOfMovdown
         this.count=0
         this.userData={
+            id:id,
             record:null,
-            id:id
+            settings:null
         }
-        getUserRecord(id).then(record=>{
-            this.userData.record=record
+        this.dataFromServer = getUserDataForGame(id)
+        
+        this.dataFromServer.then(data=>{
+            const difficultyLevels={
+                easy:500,
+                medium:250,
+                hard:150,
+            }
+            this.timeOfMovdown=difficultyLevels[data.settings.difficultyLevel]
+
+            this.userData.record=data.record
+            this.userData.settings=data.settings
             document.getElementById('record').innerText=this.userData.record
+            return data
         })
+        // getUserRecord(id).then(record=>{
+        //     this.userData.record=record
+        //     document.getElementById('record').innerText=this.userData.record
+        // })
         listenerKeys=listenerKeys.bind(this)
         listenerButtons=listenerButtons.bind(this)
     }
@@ -120,7 +136,13 @@ export class GameManadger{
         if(this.count>this.userData.record){
             this.userData.record=this.count
             document.getElementById('record').innerText=this.count
-            patchUser(this.userData)
+            patchUserDataForGame({
+                id:this.userData.id,
+                dataForGame:{
+                    record:this.userData.record,
+                    settings:this.userData.settings,
+                }
+            })
         }
     }
     isGameOver(){
@@ -160,7 +182,9 @@ export class GameManadger{
     }
     startGame(){
         this.isContinue=true
-        this.movingDown()
+        this.dataFromServer.then(()=>{
+            this.movingDown()
+        })
         document.addEventListener('keydown',listenerKeys)
         document.addEventListener('click',listenerButtons)
         // document.addEventListener('keydown',event=>{

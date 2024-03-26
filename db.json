@@ -10,19 +10,34 @@
       "id": "5a9d",
       "login": "JDL",
       "password": "453231",
-      "record": 500
+      "dataForGame": {
+        "record": 500,
+        "settings": {
+          "difficultyLevel": "medium"
+        }
+      }
     },
     {
       "id": "5fa4",
       "login": "ГУСЬ",
       "password": "ГУСЬ",
-      "record": 100000
+      "dataForGame": {
+        "record": 120,
+        "settings": {
+          "difficultyLevel": "medium"
+        }
+      }
     },
     {
       "id": "be04",
       "login": "asdf",
       "password": "asdf",
-      "record": 20
+      "dataForGame": {
+        "record": 10,
+        "settings": {
+          "difficultyLevel": "hard"
+        }
+      }
     }
   ]
 }

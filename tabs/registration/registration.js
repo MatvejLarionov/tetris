@@ -7,7 +7,12 @@ import { isUser } from "../../api/isUser.js";
 const userData={
     login:'',
     password:'',
-    record:0,
+    dataForGame:{
+        record:0,
+        settings:{
+            difficultyLevel:'medium',
+        }
+    },
     setLogin(login){
         this.login=login
     },

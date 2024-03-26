@@ -148,7 +148,9 @@ export const Tetris={
 
         this.setDialogOfDifficultyLevel()
         this.setDialogOfLoss()
-
+        for (let i = 330; i < 344; i++) {
+            this.gameField.querySelectorAll('div')[i].style.background='red'    
+        }
         document.querySelector(':root').style.setProperty('--n',this.n)
         document.querySelector(':root').style.setProperty('--m',this.m)
 
