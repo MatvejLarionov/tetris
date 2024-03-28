@@ -1,6 +1,10 @@
 .dialogContainer{
-    width: 350px;
+    width: 500px;
+    height: 400px;
+
     display: flex;
+    align-items: center;
+    flex-direction: column;
     justify-content: space-between;
 }
 .dialogContainer button:hover{
@@ -12,12 +16,43 @@
     color: white;
     transition: 0.3s;
 }
+.header{
+    font-size: 40px;
+    text-transform: uppercase;
+}
+.btnRestart{
+    transition: 0.5s;
+    width: 100px;
+    height: 50px;
+    border-radius: 25px;
+    font-family: lemon;
+    font-size: 17px;
+    font-weight: 600;
+
+    background-color: blueviolet;
+}
 .btnCloseDialog{
     transition: 0.5s;
     height: 20px;
     border: none;
     background-color: white;
     font-weight: 600;
+
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+.difficultyLevelContainer{
+    width: 350px;
+    height: 200px;
+}
+.textOfDifficultyLevel{
+    font-size: 20px;
+}
+.btnContainer{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
 .btnEasy{
     transition: 0.5s;

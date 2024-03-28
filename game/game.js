@@ -4,14 +4,15 @@ import { FigureControllerConstrct } from "./GameManadger.js";
 import { Point } from "./Point.js";
 import {createElement} from '../components/createElement.js'
 import { getButton } from '../components/button.js';
-import { getDialogOfDifficultyLevel } from './dialogOfDifficultyLevel.js';
 import { getDialogOfLoss } from './dialogOfLoss.js';
+import { getDialogOfPause } from './dialogOfPause.js';
 
 
-function stopGame(){}
-function restartGame(){}
-function openDialogOfDifficultyLevel() {
-    document.getElementById('dialogOfDifficultyLevel').showModal()
+// function stopGame(){}
+// function restartGame(){}
+function openDialogOfPause() {
+    Tetris.stopGame()
+    document.getElementById('dialogOfPause').showModal()
 }
 export function openDialogOfLoss(){
     document.getElementById('dialogOfLoss').showModal()
@@ -33,6 +34,11 @@ export const Tetris={
         this.timeOfMovdown=difficultyLevels[difficultyLevel]
     },
     stopGame(event){
+        if(!event){
+            this.game.stopGame()
+            this.gameField.style.filter='blur(50px)'
+            return
+        }
         if(event.target.innerText.toLowerCase()==='stop'){
             this.game.stopGame()
             event.target.innerText='start'
@@ -45,7 +51,7 @@ export const Tetris={
     },
     id:null,
     restartGame(){
-        document.getElementById('btnStartStop').innerText='stop'
+        // document.getElementById('btnStartStop').innerText='stop'
         this.gameField.style.filter='blur(0)'
         this.game.timeOfMovdown=this.timeOfMovdown
         this.game.restartGame()
@@ -61,6 +67,7 @@ export const Tetris={
         // }
     },
     startGame(){
+        this.gameField.style.filter='blur(0)'
         this.game.startGame()
     },
 
@@ -77,19 +84,9 @@ export const Tetris={
         
         this.gameContainer.append(countContainer)
     },
-    setNav(){
-        const nav=createElement({tagName:'nav',className:'nav',id:'nav'})
-        const btnStartStop=getButton({text:'stop',className:'btnStartStop',id:'btnStartStop',callBack:stopGame})
-        const btnRestart=getButton({text:'restart',className:'btnRestart',id:'btnRestart',callBack:restartGame})
-        const btnDifficultyLevel=getButton({text:'difficulty level',className:'btnDifficultyLevel',id:'btnDifficultyLevel',callBack:openDialogOfDifficultyLevel})
-        nav.append(
-            btnStartStop,
-            btnRestart,
-            btnDifficultyLevel,
-        )
-        
-        
-        this.gameContainer.append(nav)
+    setBtnPause(){
+        const btnPause=getButton({text:'pause',className:'btnPause',id:'btnPause',callBack:openDialogOfPause})
+        this.gameContainer.append(btnPause)
     },
     setNavControl(){
         const navControl=createElement({tagName:'nav',className:'navControl',id:'navControl'});
@@ -125,9 +122,9 @@ export const Tetris={
         this.gameField.getElementsByTagName('div')[new Point(this.n - 1,this.m - 1).getIndex(this.n)].style.borderBottomRightRadius='15px'
         this.gameField.getElementsByTagName('div')[new Point(0,this.m-1).getIndex(this.n)].style.borderBottomLeftRadius='15px'
     },
-    setDialogOfDifficultyLevel(){
-        const dialog=createElement({tagName:'dialog',className:'dialogOfDifficultyLevel',id:'dialogOfDifficultyLevel'})
-        dialog.append(getDialogOfDifficultyLevel())
+    setDialogOfPause(){
+        const dialog=createElement({tagName:'dialog',className:'dialogOfPause',id:'dialogOfPause'})
+        dialog.append(getDialogOfPause())
         this.gameContainer.append(dialog)
     },
     setDialogOfLoss(){
@@ -136,7 +133,7 @@ export const Tetris={
         this.gameContainer.append(dialogOfLoss)
     },
     getTetris(){
-        this.setNav()
+        this.setBtnPause()
         this.createGameField()
         this.setCounts()
         if(!navigator.userAgent.includes('Windows')){
@@ -146,21 +143,22 @@ export const Tetris={
         this.fillField()
         this.roundCorners()
 
-        this.setDialogOfDifficultyLevel()
+        this.setDialogOfPause()
         this.setDialogOfLoss()
-        for (let i = 330; i < 344; i++) {
-            this.gameField.querySelectorAll('div')[i].style.background='red'    
-        }
+        // for (let i = 330; i < 344; i++) {
+        //     this.gameField.querySelectorAll('div')[i].style.background='red'    
+        // }
         document.querySelector(':root').style.setProperty('--n',this.n)
         document.querySelector(':root').style.setProperty('--m',this.m)
 
         
         this.game=new GameManadger(FigureControllerConstrct(this.gameField.getElementsByTagName('div'),this.n,this.m),window.location.pathname.split('/').at(-1),this.timeOfMovdown)
         
+        // setTimeout(()=>openDialogOfPause())
         return this.gameContainer
     }
 }
 
-stopGame=Tetris.stopGame.bind(Tetris)
+// stopGame=Tetris.stopGame.bind(Tetris)
 
-restartGame=Tetris.restartGame.bind(Tetris)
+// restartGame=Tetris.restartGame.bind(Tetris)
